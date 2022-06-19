@@ -6,9 +6,6 @@ namespace ExtensionBox
 {
     public static class StringExtension
     {
-        public static bool CanConvertToNullableNumericType(this string s) =>
-            s is null || s.IsANumber();
-
         /// <summary>
         /// Formats a string.
         /// </summary>
@@ -16,13 +13,16 @@ namespace ExtensionBox
         /// <param name="pattern">Pattern.</param>
         /// <param name="replacement">Replacement.</param>
         /// <returns>Formatted string.</returns>
+        /// <exception cref="ArgumentException">
+        /// Thrown when given an empty pattern.
+        /// </exception>
         public static string FormatString(this string s, string pattern, string replacement)
         {
             if (string.IsNullOrEmpty(s))
                 return s;
 
             if (string.IsNullOrEmpty(pattern))
-                return s;
+                throw new ArgumentException("Invalid pattern", nameof(pattern));
 
             var regExp = new Regex(pattern);
             return regExp.Replace(s, replacement);
