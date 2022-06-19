@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Linq;
+using System.Collections.Generic;
 using System.Security.Claims;
 
 namespace ExtensionBox
@@ -14,11 +14,16 @@ namespace ExtensionBox
         /// <param name="claimName">Key used to find a value in a collection of claims.</param>
         /// <param name="claims">Collection of claims.</param>
         /// <returns>Claim value.</returns>
+        /// <exception cref="KeyNotFoundException">
+        /// Thrown when the claim can't be found in the collection.
+        /// </exception>
         public static TClaim GetClaim<TClaim>(this ClaimsPrincipal claims, string claimName)
         {
-            string claim = claims.Claims.First(c => c.Type == claimName).Value;
+            var claim = claims.FindFirst(x => x.Type == claimName);
 
-            return (TClaim)Convert.ChangeType(claim, typeof(TClaim));
+            _ = claim ?? throw new KeyNotFoundException($"Key {claimName} not found in the collection.");
+
+            return (TClaim)Convert.ChangeType(claim.Value, typeof(TClaim));
         }
 
         /// <summary>
@@ -36,7 +41,7 @@ namespace ExtensionBox
         /// <returns>Claim value.</returns>
         public static TClaim GetClaim<TClaim>(this ClaimsPrincipal claims, string claimName, TClaim defaultValue)
         {
-            if (!claims.Claims.Any(c => c.Type == claimName))
+            if (!claims.HasClaim(x => x.Type == claimName))
                 return defaultValue;
 
             return claims.GetClaim<TClaim>(claimName);
