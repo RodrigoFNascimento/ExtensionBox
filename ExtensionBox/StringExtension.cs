@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace ClaimReader.Extensions
+namespace ExtensionBox
 {
     public static class StringExtension
     {
@@ -67,7 +67,7 @@ namespace ClaimReader.Extensions
         /// <exception cref="InvalidCastException">Thrown when <paramref name="s"/> isn't a number.</exception>
         public static byte[] ToByteArray(this string s)
         {
-            if (!IsANumber(s))
+            if (!s.IsANumber())
                 throw new InvalidCastException($"Can't convert {s} to byte array.");
 
             int length = s.Length;

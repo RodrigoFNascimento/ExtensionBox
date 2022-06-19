@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ClaimReader.Extensions
+namespace ExtensionBox
 {
     public static class TypeExtension
     {
