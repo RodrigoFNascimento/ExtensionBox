@@ -22,7 +22,7 @@ namespace ExtensionBox
         /// true if <paramref name="t"/> is a nullable numeric type,
         /// false otherwise.
         /// </returns>
-        public static bool IsNullableNumericType(this Type t) =>
+        public static bool IsNullableNumeric(this Type t) =>
             t == typeof(sbyte?)
             || t == typeof(byte?)
             || t == typeof(short?)
@@ -43,7 +43,7 @@ namespace ExtensionBox
         /// true if <paramref name="t"/> is a numeric type,
         /// false otherwise.
         /// </returns>
-        public static bool IsNumericType(this Type t) =>
+        public static bool IsNumeric(this Type t) =>
             t == typeof(sbyte)
             || t == typeof(sbyte?)
             || t == typeof(byte)
